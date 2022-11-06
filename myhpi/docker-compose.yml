@@ -11,6 +11,8 @@ services:
          - myhpi_postgres
        env_file:
          - .env
+       networks:
+         - intern
    myhpi_postgres:
        image: postgres:14-alpine
        volumes:
@@ -22,6 +24,8 @@ services:
          interval: 10s
          timeout: 5s
          retries: 5
+       networks:
+         - intern
    myhpi_nginx:
      build: ./nginx
      volumes:
@@ -30,7 +34,18 @@ services:
        - "80:80"
      depends_on:
        - myhpi_django
+     networks:
+       - internet
+       - intern
+
 
 volumes:
   myhpi_postgres_data:
   myhpi_static_volume:
+
+networks:
+  intern:
+    internal: true
+  internet:
+    name: default-network
+    external: true
