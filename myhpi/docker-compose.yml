@@ -30,8 +30,8 @@ services:
      build: ./nginx
      volumes:
        - myhpi_static_volume:/app/data/static/
-     ports:
-       - "80:80"
+     expose:
+       - 80
      depends_on:
        - myhpi_django
      networks:
